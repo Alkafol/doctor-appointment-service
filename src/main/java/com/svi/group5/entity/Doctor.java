@@ -1,5 +1,6 @@
 package com.svi.group5.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -16,4 +17,7 @@ public class Doctor extends User {
 
     @OneToMany(mappedBy="doctor")
     private Set<Appointment> appointments;
+
+    @Column(name = "position")
+    private String position;
 }
