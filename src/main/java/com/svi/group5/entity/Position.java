@@ -18,6 +18,6 @@ public class Position {
     @OneToMany(mappedBy="position")
     private Set<Doctor> doctors;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
 }
