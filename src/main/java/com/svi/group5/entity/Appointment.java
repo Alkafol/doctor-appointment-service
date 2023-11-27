@@ -24,12 +24,12 @@ public class Appointment {
     @JoinColumn(name="doctor_id", nullable = false)
     private Doctor doctor;
 
-    @Column(name = "start_time")
+    @Column(name = "start_time", nullable = false)
     private LocalDateTime startTime;
 
-    @Column(name = "end_time")
+    @Column(name = "end_time", nullable = false)
     private LocalDateTime endTime;
 
-    @Column(name = "status")
+    @Column(name = "status", nullable = false)
     private AppointmentStatus status;
 }

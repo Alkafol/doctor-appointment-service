@@ -35,19 +35,20 @@ public abstract class User implements UserDetails {
     @Column(name = "date_of_birth")
     private LocalDate dateOfBirth;
 
-    @Column(name = "password")
+    @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "email")
+    @Column(name = "email", nullable = false)
     private String email;
 
-    @Column(name = "role")
+    @Column(name = "role", nullable = false)
+    @Enumerated(EnumType.STRING)
     private Role role;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> list = new ArrayList<>();
-        list.add(new SimpleGrantedAuthority(ROLE_PREFIX + role));
+        list.add(new SimpleGrantedAuthority("ROLE_" + role));
         return list;
     }
 
@@ -80,6 +81,4 @@ public abstract class User implements UserDetails {
     public boolean isEnabled() {
         return false;
     }
-
-    private final String ROLE_PREFIX = "ROLE_";
 }
