@@ -1,8 +1,6 @@
 package com.svi.group5.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,4 +14,8 @@ public class Doctor extends User {
 
     @OneToMany(mappedBy="doctor")
     private Set<Appointment> appointments;
+
+    @ManyToOne
+    @JoinColumn(name="position_id")
+    private Position position;
 }
