@@ -1,6 +1,24 @@
 package com.svi.group5.service.impl;
 
+import com.svi.group5.dao.ClientRepository;
+import com.svi.group5.entity.Client;
 import com.svi.group5.service.ClientService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import java.util.NoSuchElementException;
+
+@Service
 public class ClientServiceImpl implements ClientService {
+    private final ClientRepository clientRepository;
+
+    @Autowired
+    public ClientServiceImpl(ClientRepository clientRepository) {
+        this.clientRepository = clientRepository;
+    }
+
+    @Override
+    public Client getClientById(long id) {
+        return clientRepository.findById(id).orElseThrow(() -> new NoSuchElementException("User with id = " + id + " not found"));
+    }
 }

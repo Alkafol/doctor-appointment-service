@@ -50,6 +50,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
     private UserDataDto convertToUserDataDto(User user){
         return new UserDataDto(
+                user.getId(),
                 user.getFirstName(),
                 user.getLastName(),
                 user.getMiddleName(),
@@ -57,7 +58,6 @@ public class UserServiceImpl implements UserDetailsService, UserService {
                 user.getDateOfBirth()
         );
     }
-
 
     private User convertToUser(UserRegistrationDto userRegistrationDto) {
         Role role = userRegistrationDto.getRole();

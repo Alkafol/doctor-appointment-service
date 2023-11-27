@@ -1,5 +1,7 @@
 package com.svi.group5.service;
 
-public interface ClientService
-{
+import com.svi.group5.entity.Client;
+
+public interface ClientService {
+    Client getClientById(long id);
 }
