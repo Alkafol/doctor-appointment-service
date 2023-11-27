@@ -11,7 +11,6 @@ import java.util.Set;
 @Entity
 @Table(name = "client")
 public class Client extends User {
-
     @OneToMany(mappedBy="client")
     private Set<Appointment> appointments;
 }
