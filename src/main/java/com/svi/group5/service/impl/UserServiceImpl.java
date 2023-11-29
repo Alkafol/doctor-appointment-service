@@ -32,19 +32,17 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     }
 
     @Override
-    public UserDataDto registerUser(UserRegistrationDto userRegistrationDto) {
-        String email = userRegistrationDto.getEmail();
+    public User registerUser(User user) {
+        String email = user.getEmail();
         boolean isEmailTaken = userRepository.existsByEmail(email);
         if (isEmailTaken) {
             throw new IllegalStateException("Email " + email + " is already taken");
         }
 
-        String password = userRegistrationDto.getPassword();
+        String password = user.getPassword();
         String encodedPassword = passwordEncoder.encode(password);
-        userRegistrationDto.setPassword(encodedPassword);
-        User user = convertToUser(userRegistrationDto);
+        user.setPassword(encodedPassword);
 
-        User savedUser = userRepository.save(user);
-        return convertToUserDataDto(savedUser);
+        return userRepository.save(user);
     }
 }
