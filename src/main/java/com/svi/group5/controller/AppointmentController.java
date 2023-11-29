@@ -5,9 +5,11 @@ import com.svi.group5.dto.AppointmentUpdateDto;
 import com.svi.group5.entity.Appointment;
 import com.svi.group5.entity.Client;
 import com.svi.group5.entity.Doctor;
+import com.svi.group5.entity.User;
 import com.svi.group5.service.AppointmentService;
 import com.svi.group5.service.ClientService;
 import com.svi.group5.service.DoctorService;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -31,7 +33,7 @@ public class AppointmentController {
 
     @GetMapping("/{appointmentId}")
     public AppointmentDataDto getAppointmentById(@PathVariable Long appointmentId) {
-        Appointment appointment = appointmentService.findAppointmentById(appointmentId);
+        Appointment appointment = appointmentService.getAppointmentById(appointmentId);
         return convertToAppointmentDto(appointment);
     }
 
@@ -41,16 +43,17 @@ public class AppointmentController {
             @RequestParam LocalDate startDate,
             @RequestParam LocalDate endDate
     ) {
-        Set<Appointment> appointments = appointmentService.findAppointmentsByUserId(userId, startDate, endDate);
+        Set<Appointment> appointments = appointmentService.getAppointmentsByUserId(userId, startDate, endDate);
         return appointments.stream()
                 .map(this::convertToAppointmentDto)
                 .collect(Collectors.toSet());
     }
 
     @PutMapping
-    public AppointmentDataDto update(@RequestBody AppointmentUpdateDto appointmentUpdateDto) {
+    public AppointmentDataDto update(@RequestBody AppointmentUpdateDto appointmentUpdateDto, Authentication authentication) {
+        User user = (User) authentication.getCredentials();
         Appointment appointment = convertToAppointment(appointmentUpdateDto);
-        Appointment savedAppointment = appointmentService.updateAppointment(appointment);
+        Appointment savedAppointment = appointmentService.updateAppointment(appointment, user);
         return convertToAppointmentDto(savedAppointment);
     }
 

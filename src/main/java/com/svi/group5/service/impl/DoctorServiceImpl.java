@@ -1,11 +1,9 @@
 package com.svi.group5.service.impl;
 
 import com.svi.group5.dao.DoctorRepository;
-import com.svi.group5.dao.PositionRepository;
 import com.svi.group5.entity.Doctor;
 import com.svi.group5.entity.Position;
 import com.svi.group5.service.DoctorService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,12 +11,9 @@ import java.util.List;
 @Service
 public class DoctorServiceImpl implements DoctorService {
     private final DoctorRepository doctorRepository;
-    private final PositionRepository positionRepository;
 
-    @Autowired
-    public DoctorServiceImpl(DoctorRepository doctorRepository, PositionRepository positionRepository) {
+    public DoctorServiceImpl(DoctorRepository doctorRepository) {
         this.doctorRepository = doctorRepository;
-        this.positionRepository = positionRepository;
     }
 
     @Override
@@ -32,12 +27,12 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
     @Override
-    public Doctor updateDoctor(Doctor doctor) {
-        return doctorRepository.save(doctor);
+    public Doctor setDoctorPosition(Long doctorId, Long positionId) {
+        return null;
     }
 
     @Override
-    public Position savePosition(Position position) {
-        return positionRepository.save(position);
+    public Position createPosition(String name) {
+        return null;
     }
 }
