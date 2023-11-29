@@ -6,8 +6,8 @@ import java.time.LocalDate;
 import java.util.Set;
 
 public interface AppointmentService {
-    Appointment getAppointmentById(Long id);
-    Set<Appointment> getAppointmentsByUserId(Long userId);
-    Set<Appointment> getAppointmentsByUserId(Long userId, LocalDate startDate, LocalDate endDate);
+    Appointment findAppointmentById(Long id);
+    Set<Appointment> findAppointmentsByUserId(Long userId);
+    Set<Appointment> findAppointmentsByUserId(Long userId, LocalDate startDate, LocalDate endDate);
     Appointment updateAppointment(Appointment appointment);
 }

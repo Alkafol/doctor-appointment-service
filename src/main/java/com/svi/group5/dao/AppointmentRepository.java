@@ -4,6 +4,7 @@ import com.svi.group5.entity.Appointment;
 import com.svi.group5.enums.AppointmentStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
@@ -12,6 +13,6 @@ import java.util.Set;
 @Repository
 public interface AppointmentRepository extends JpaRepository<Appointment, Long> {
     Set<Appointment> findAppointmentByDoctorIdOrClientId(Long doctorId, Long clientId);
-    @Query("SELECT * from Appointment WHERE id = userId and startTime < endDate and endTime > startDate")
-    Set<Appointment> findAppointmentByDateRange(long userId, LocalDate startDate, LocalDate endDate);
+    @Query("SELECT a from Appointment a WHERE (a.client.id = :userId or a.doctor.id = :userId) and :startDate < a.startTime and a.endTime < :endDate")
+    Set<Appointment> findAppointmentByDateRange(@Param("userId") long userId, @Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
 }
