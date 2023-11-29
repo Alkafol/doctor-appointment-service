@@ -4,9 +4,12 @@ import com.svi.group5.entity.Doctor;
 import com.svi.group5.entity.Position;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public interface DoctorService {
-    Doctor getDoctorById(long id);
-    Doctor setDoctorPosition(long doctorId, long positionId);
+    Doctor findDoctorById(Long id);
+    List<Doctor> findAllDoctors();
+    Doctor setDoctorPosition(Long doctorId, Long positionId);
     Position createPosition(String name);
 }

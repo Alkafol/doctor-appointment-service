@@ -6,6 +6,7 @@ import com.svi.group5.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
@@ -18,7 +19,12 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public Client getClientById(long id) {
+    public Client findClientById(Long id) {
         return clientRepository.findById(id).orElseThrow(() -> new NoSuchElementException("User with id = " + id + " not found"));
+    }
+
+    @Override
+    public List<Client> findAllClients() {
+        return clientRepository.findAll();
     }
 }
