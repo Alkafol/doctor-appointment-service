@@ -1,7 +1,6 @@
 package com.svi.group5.dao;
 
 import com.svi.group5.entity.Appointment;
-import com.svi.group5.enums.AppointmentStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
