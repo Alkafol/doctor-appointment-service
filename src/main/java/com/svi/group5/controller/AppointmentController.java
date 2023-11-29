@@ -31,7 +31,7 @@ public class AppointmentController {
 
     @GetMapping("/{appointmentId}")
     public AppointmentDataDto getAppointmentById(@PathVariable Long appointmentId) {
-        Appointment appointment = appointmentService.getAppointmentById(appointmentId);
+        Appointment appointment = appointmentService.findAppointmentById(appointmentId);
         return convertToAppointmentDto(appointment);
     }
 
@@ -41,7 +41,7 @@ public class AppointmentController {
             @RequestParam LocalDate startDate,
             @RequestParam LocalDate endDate
     ) {
-        Set<Appointment> appointments = appointmentService.getAppointmentsByUserId(userId, startDate, endDate);
+        Set<Appointment> appointments = appointmentService.findAppointmentsByUserId(userId, startDate, endDate);
         return appointments.stream()
                 .map(this::convertToAppointmentDto)
                 .collect(Collectors.toSet());

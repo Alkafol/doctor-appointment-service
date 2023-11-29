@@ -20,18 +20,17 @@ public class AppointmentServiceImpl implements AppointmentService {
     }
 
     @Override
-    public Appointment getAppointmentById(Long id) {
-        return appointmentRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Appointment with id = " + id + " not found"));
+    public Appointment findAppointmentById(Long id) {
+        return appointmentRepository.findById(id).orElse(null);
     }
 
-    //TODO Исправить как появится что-то на фронте
     @Override
-    public Set<Appointment> getAppointmentsByUserId(Long userId) {
+    public Set<Appointment> findAppointmentsByUserId(Long userId) {
         return appointmentRepository.findAppointmentByDoctorIdOrClientId(userId, userId);
     }
 
     @Override
-    public Set<Appointment> getAppointmentsByUserId(Long userId, LocalDate startDate, LocalDate endDate) {
+    public Set<Appointment> findAppointmentsByUserId(Long userId, LocalDate startDate, LocalDate endDate) {
         return appointmentRepository.findAppointmentByDateRange(userId, startDate, endDate);
     }
 
