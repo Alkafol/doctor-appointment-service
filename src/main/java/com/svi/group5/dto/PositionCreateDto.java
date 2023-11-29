@@ -5,7 +5,6 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class PositionDto {
-    Long id;
+public class PositionCreateDto {
     String name;
 }

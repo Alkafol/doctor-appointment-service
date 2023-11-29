@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 @Service
 public class ClientServiceImpl implements ClientService {
@@ -31,6 +32,10 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public Client updateClient(Client client, User user) {
-        return null;
+        if (!Objects.equals(client.getId(), user.getId())) {
+            throw new IllegalStateException();
+        }
+
+        return clientRepository.save(client);
     }
 }

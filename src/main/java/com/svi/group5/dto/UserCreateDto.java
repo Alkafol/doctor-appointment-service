@@ -9,7 +9,7 @@ import java.time.LocalDate;
 
 @Data
 @AllArgsConstructor
-public class UserRegistrationDto {
+public class UserCreateDto {
     private String firstName;
     private String lastName;
     private String middleName;

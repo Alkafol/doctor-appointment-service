@@ -1,7 +1,7 @@
 package com.svi.group5.mapper;
 
 import com.svi.group5.dto.UserDataDto;
-import com.svi.group5.dto.UserRegistrationDto;
+import com.svi.group5.dto.UserCreateDto;
 import com.svi.group5.entity.Client;
 import com.svi.group5.entity.Doctor;
 import com.svi.group5.entity.User;
@@ -9,8 +9,8 @@ import com.svi.group5.enums.Role;
 
 public class UserMapper {
 
-    public static User convertToUser(UserRegistrationDto userRegistrationDto) {
-        Role role = userRegistrationDto.getRole();
+    public static User convertToUser(UserCreateDto userCreateDto) {
+        Role role = userCreateDto.getRole();
         User user;
 
         user = switch (role) {
@@ -19,12 +19,12 @@ public class UserMapper {
         };
 
         user.setRole(role);
-        user.setEmail(userRegistrationDto.getEmail());
-        user.setFirstName(userRegistrationDto.getFirstName());
-        user.setLastName(userRegistrationDto.getLastName());
-        user.setMiddleName(userRegistrationDto.getMiddleName());
-        user.setDateOfBirth(userRegistrationDto.getDateOfBirth());
-        user.setPassword(userRegistrationDto.getPassword());
+        user.setEmail(userCreateDto.getEmail());
+        user.setFirstName(userCreateDto.getFirstName());
+        user.setLastName(userCreateDto.getLastName());
+        user.setMiddleName(userCreateDto.getMiddleName());
+        user.setDateOfBirth(userCreateDto.getDateOfBirth());
+        user.setPassword(userCreateDto.getPassword());
 
         return user;
     }
