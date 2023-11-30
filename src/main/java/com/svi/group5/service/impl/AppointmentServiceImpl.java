@@ -39,6 +39,11 @@ public class AppointmentServiceImpl implements AppointmentService {
     }
 
     @Override
+    public Set<Appointment> getAppointmentsByUserIdAndStatus(Long userId, LocalDate startDate, LocalDate endDate, AppointmentStatus status) {
+        return appointmentRepository.findAppointmentByDateRangeAndStatus(userId, startDate, endDate, status);
+    }
+
+    @Override
     public Appointment updateAppointment(Appointment appointment, User user) {
         if (user.getRole() == Role.CLIENT) {
             if (Objects.equals(user.getId(), appointment.getClient().getId())) {
