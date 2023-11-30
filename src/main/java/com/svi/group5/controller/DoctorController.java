@@ -18,6 +18,7 @@ import static com.svi.group5.mapper.UserMapper.convertToUserDataDto;
 
 @RestController
 @RequestMapping("/doctors")
+@CrossOrigin
 public class DoctorController {
     private final DoctorService doctorService;
     private final PositionService positionService;

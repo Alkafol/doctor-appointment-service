@@ -23,6 +23,7 @@ import static com.svi.group5.mapper.UserMapper.convertToUserDataDto;
 
 @RestController
 @RequestMapping("/appointments")
+@CrossOrigin
 public class AppointmentController {
     private final AppointmentService appointmentService;
     private final ClientService clientService;
