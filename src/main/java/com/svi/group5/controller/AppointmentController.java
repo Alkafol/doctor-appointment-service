@@ -61,7 +61,7 @@ public class AppointmentController {
                 .collect(Collectors.toSet());
     }
 
-    @GetMapping("/user/{userId}")
+    @GetMapping("/user/{userId}/status")
     public Set<AppointmentDataDto> getAppointmentsByUserIdAndStatus(
             @PathVariable Long userId,
             @DateTimeFormat(pattern = "yyyyMMdd")
