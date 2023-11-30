@@ -48,7 +48,7 @@ public class DoctorController {
 
     @PutMapping
     public DoctorDataDto updateDoctor(@RequestBody DoctorUpdateDto doctorUpdateDto, Authentication authentication) {
-        User user = (User) authentication.getCredentials();
+        User user = (User) authentication.getPrincipal();
         Doctor doctor = convertToDoctor(doctorUpdateDto);
         Doctor savedDoctor = doctorService.update(doctor, user);
         return convertToDoctorDto(savedDoctor);

@@ -37,7 +37,7 @@ public class ClientController {
 
     @PutMapping
     public ClientDataDto updateClient(ClientUpdateDto clientUpdateDto, Authentication authentication) {
-        User user = (User) authentication.getCredentials();
+        User user = (User) authentication.getPrincipal();
         Client client = convertToClient(clientUpdateDto);
         Client updatedClient = clientService.updateClient(client, user);
         return convertToClientDto(updatedClient);
