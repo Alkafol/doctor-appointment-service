@@ -11,4 +11,6 @@ public interface AppointmentService {
     Set<Appointment> getAppointmentsByUserId(Long userId);
     Set<Appointment> getAppointmentsByUserId(Long userId, LocalDate startDate, LocalDate endDate);
     Appointment updateAppointment(Appointment appointment, User user);
+
+    Appointment save(Appointment appointment);
 }

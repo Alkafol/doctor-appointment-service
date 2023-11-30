@@ -30,7 +30,7 @@ public class TimetableServiceImpl {
         this.doctorRepository = doctorRepository;
     }
 
-    @Scheduled(cron = "${startAppointmentGeneration}")
+    @Scheduled(cron = "0 0 1 * * MON")
     public void setupAppointmentTimetable() {
         List<Doctor> allDoctors = doctorRepository.findAll();
 

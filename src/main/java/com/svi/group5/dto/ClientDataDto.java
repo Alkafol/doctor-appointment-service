@@ -7,5 +7,6 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class ClientDataDto {
+    @JsonUnwrapped
     private UserDataDto userInfo;
 }

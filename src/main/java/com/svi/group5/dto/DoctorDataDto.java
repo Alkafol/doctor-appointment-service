@@ -4,11 +4,11 @@ import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import java.util.Set;
-
 @Data
 @AllArgsConstructor
-public class DoctorDto {
+public class DoctorDataDto {
+    @JsonUnwrapped
     private UserDataDto userInfo;
-    private PositionDto position;
+    @JsonUnwrapped
+    private PositionDataDto position;
 }

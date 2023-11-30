@@ -1,14 +1,17 @@
 package com.svi.group5.controller;
 
+import com.svi.group5.dto.AppointmentCreateDto;
 import com.svi.group5.dto.AppointmentDataDto;
 import com.svi.group5.dto.AppointmentUpdateDto;
 import com.svi.group5.entity.Appointment;
 import com.svi.group5.entity.Client;
 import com.svi.group5.entity.Doctor;
 import com.svi.group5.entity.User;
+import com.svi.group5.enums.AppointmentStatus;
 import com.svi.group5.service.AppointmentService;
 import com.svi.group5.service.ClientService;
 import com.svi.group5.service.DoctorService;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,6 +34,13 @@ public class AppointmentController {
         this.doctorService = doctorService;
     }
 
+    @PostMapping
+    public AppointmentDataDto createAppointment(@RequestBody AppointmentCreateDto appointmentCreateDto) {
+        Appointment appointment = convertToAppointment(appointmentCreateDto);
+        Appointment savedAppointment = appointmentService.save(appointment);
+        return convertToAppointmentDto(savedAppointment);
+    }
+
     @GetMapping("/{appointmentId}")
     public AppointmentDataDto getAppointmentById(@PathVariable Long appointmentId) {
         Appointment appointment = appointmentService.getAppointmentById(appointmentId);
@@ -40,7 +50,9 @@ public class AppointmentController {
     @GetMapping("/user/{userId}")
     public Set<AppointmentDataDto> getAppointmentsByUserId(
             @PathVariable Long userId,
+            @DateTimeFormat(pattern = "yyyyMMdd")
             @RequestParam LocalDate startDate,
+            @DateTimeFormat(pattern = "yyyyMMdd")
             @RequestParam LocalDate endDate
     ) {
         Set<Appointment> appointments = appointmentService.getAppointmentsByUserId(userId, startDate, endDate);
@@ -51,7 +63,7 @@ public class AppointmentController {
 
     @PutMapping
     public AppointmentDataDto update(@RequestBody AppointmentUpdateDto appointmentUpdateDto, Authentication authentication) {
-        User user = (User) authentication.getCredentials();
+        User user = (User) authentication.getPrincipal();
         Appointment appointment = convertToAppointment(appointmentUpdateDto);
         Appointment savedAppointment = appointmentService.updateAppointment(appointment, user);
         return convertToAppointmentDto(savedAppointment);
@@ -69,14 +81,26 @@ public class AppointmentController {
     }
 
     private Appointment convertToAppointment(AppointmentUpdateDto appointmentUpdateDto) {
-        Appointment appointment = new Appointment();
+        Appointment appointment = appointmentService.getAppointmentById(appointmentUpdateDto.getId());
         Client client = clientService.findClientById(appointmentUpdateDto.getClientId());
-        Doctor doctor = doctorService.findDoctorById(appointmentUpdateDto.getDoctorId());
 
         appointment.setId(appointmentUpdateDto.getId());
         appointment.setClient(client);
-        appointment.setDoctor(doctor);
         appointment.setStatus(appointmentUpdateDto.getStatus());
+
+        return appointment;
+    }
+
+    private Appointment convertToAppointment(AppointmentCreateDto appointmentCreateDto) {
+        Appointment appointment = new Appointment();
+        Client client = clientService.findClientById(appointmentCreateDto.getClientId());
+        Doctor doctor = doctorService.findDoctorById(appointmentCreateDto.getDoctorId());
+
+        appointment.setClient(client);
+        appointment.setDoctor(doctor);
+        appointment.setStartTime(appointmentCreateDto.getStartTime());
+        appointment.setEndTime(appointmentCreateDto.getEndTime());
+        appointment.setStatus(AppointmentStatus.AVAILABLE);
 
         return appointment;
     }

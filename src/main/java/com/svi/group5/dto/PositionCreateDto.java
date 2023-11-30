@@ -2,10 +2,11 @@ package com.svi.group5.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
-public class PositionDto {
-    Long id;
+@NoArgsConstructor
+public class PositionCreateDto {
     String name;
 }

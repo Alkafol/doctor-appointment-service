@@ -2,11 +2,12 @@ package com.svi.group5.service.impl;
 
 import com.svi.group5.dao.DoctorRepository;
 import com.svi.group5.entity.Doctor;
-import com.svi.group5.entity.Position;
+import com.svi.group5.entity.User;
 import com.svi.group5.service.DoctorService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class DoctorServiceImpl implements DoctorService {
@@ -27,12 +28,11 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
     @Override
-    public Doctor setDoctorPosition(Long doctorId, Long positionId) {
-        return null;
-    }
+    public Doctor update(Doctor doctor, User user) {
+        if (!Objects.equals(user.getId(), doctor.getId())) {
+            throw new IllegalStateException();
+        }
 
-    @Override
-    public Position createPosition(String name) {
-        return null;
+        return doctorRepository.save(doctor);
     }
 }
