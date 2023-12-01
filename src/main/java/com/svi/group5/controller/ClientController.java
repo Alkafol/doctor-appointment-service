@@ -15,6 +15,7 @@ import static com.svi.group5.mapper.UserMapper.convertToUserDataDto;
 
 @RestController
 @RequestMapping("/clients")
+@CrossOrigin
 public class ClientController {
     private final ClientService clientService;
 
