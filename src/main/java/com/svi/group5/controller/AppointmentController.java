@@ -62,6 +62,21 @@ public class AppointmentController {
                 .collect(Collectors.toSet());
     }
 
+    @GetMapping("/user/{userId}/status")
+    public Set<AppointmentDataDto> getAppointmentsByUserIdAndStatus(
+            @PathVariable Long userId,
+            @DateTimeFormat(pattern = "yyyyMMdd")
+            @RequestParam LocalDate startDate,
+            @DateTimeFormat(pattern = "yyyyMMdd")
+            @RequestParam LocalDate endDate,
+            @RequestParam AppointmentStatus status
+    ) {
+        Set<Appointment> appointments = appointmentService.getAppointmentsByUserIdAndStatus(userId, startDate, endDate, status);
+        return appointments.stream()
+                .map(this::convertToAppointmentDto)
+                .collect(Collectors.toSet());
+    }
+
     @PutMapping
     public AppointmentDataDto update(@RequestBody AppointmentUpdateDto appointmentUpdateDto, Authentication authentication) {
         User user = (User) authentication.getPrincipal();
@@ -94,10 +109,8 @@ public class AppointmentController {
 
     private Appointment convertToAppointment(AppointmentCreateDto appointmentCreateDto) {
         Appointment appointment = new Appointment();
-        Client client = clientService.findClientById(appointmentCreateDto.getClientId());
         Doctor doctor = doctorService.findDoctorById(appointmentCreateDto.getDoctorId());
 
-        appointment.setClient(client);
         appointment.setDoctor(doctor);
         appointment.setStartTime(appointmentCreateDto.getStartTime());
         appointment.setEndTime(appointmentCreateDto.getEndTime());
