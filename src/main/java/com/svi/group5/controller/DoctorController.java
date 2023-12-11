@@ -57,7 +57,6 @@ public class DoctorController {
 
     private Doctor convertToDoctor(DoctorUpdateDto doctorUpdateDto) {
         Doctor doctor = doctorService.findDoctorById(doctorUpdateDto.getId());
-        Position position = positionService.findById(doctorUpdateDto.getPositionId());
 
         doctor.setId(doctorUpdateDto.getId());
         doctor.setFirstName(doctorUpdateDto.getFirstName());
@@ -65,7 +64,10 @@ public class DoctorController {
         doctor.setMiddleName(doctorUpdateDto.getMiddleName());
         doctor.setDateOfBirth(doctorUpdateDto.getDateOfBirth());
         doctor.setEmail(doctorUpdateDto.getEmail());
-        doctor.setPosition(position);
+        if (doctorUpdateDto.getPositionId() != null) {
+            Position position = positionService.findById(doctorUpdateDto.getPositionId());
+            doctor.setPosition(position);
+        }
 
         return doctor;
     }
@@ -78,6 +80,7 @@ public class DoctorController {
     }
 
     private PositionDataDto convertToPositionDataDto(Position position) {
+        if (position == null) return null;
         return new PositionDataDto(
                 position.getId(),
                 position.getName()
