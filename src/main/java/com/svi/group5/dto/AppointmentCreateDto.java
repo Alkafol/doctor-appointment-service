@@ -12,8 +12,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class AppointmentCreateDto {
     private Long doctorId;
-    @JsonFormat(pattern = "dd-MM-yyyy HH:mm")
+    @JsonFormat(pattern = "HH:mm dd-MM-yyyy")
     private LocalDateTime startTime;
-    @JsonFormat(pattern = "dd-MM-yyyy HH:mm")
+    @JsonFormat(pattern = "HH:mm dd-MM-yyyy")
     private LocalDateTime endTime;
 }

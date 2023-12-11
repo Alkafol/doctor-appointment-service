@@ -16,9 +16,9 @@ public class AppointmentDataDto {
     private UserDataDto clientInfo;
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private UserDataDto doctorInfo;
-    @JsonFormat(pattern = "dd-MM-yyyy HH:mm")
+    @JsonFormat(pattern = "HH:mm dd-MM-yyyy")
     private LocalDateTime startTime;
-    @JsonFormat(pattern = "dd-MM-yyyy HH:mm")
+    @JsonFormat(pattern = "HH:mm dd-MM-yyyy")
     private LocalDateTime endTime;
     private AppointmentStatus status;
 }
