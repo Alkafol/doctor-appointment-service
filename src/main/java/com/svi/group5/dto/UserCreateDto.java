@@ -17,7 +17,7 @@ public class UserCreateDto {
     private String middleName;
     private String email;
     private String password;
-    @JsonFormat(pattern = "dd.MM.yyyy")
+    @JsonFormat(pattern = "ddMMyyyy")
     private LocalDate dateOfBirth;
     private Role role;
 }

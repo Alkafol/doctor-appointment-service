@@ -30,6 +30,7 @@ public class UserMapper {
     }
 
     public static UserDataDto convertToUserDataDto(User user) {
+        if (user == null) return null;
         return new UserDataDto(
                 user.getId(),
                 user.getFirstName(),

@@ -14,6 +14,6 @@ public class UserDataDto {
     private String lastName;
     private String middleName;
     private String email;
-    @JsonFormat(pattern = "dd.MM.yyyy")
+    @JsonFormat(pattern = "ddMMyyyy")
     private LocalDate dateOfBirth;
 }

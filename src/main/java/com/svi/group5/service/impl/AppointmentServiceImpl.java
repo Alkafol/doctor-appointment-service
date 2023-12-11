@@ -9,7 +9,7 @@ import com.svi.group5.service.AppointmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Set;
@@ -29,17 +29,15 @@ public class AppointmentServiceImpl implements AppointmentService {
     }
 
     @Override
-    public Set<Appointment> getAppointmentsByUserId(Long userId) {
-        return appointmentRepository.findAppointmentByDoctorIdOrClientId(userId, userId);
-    }
-
-    @Override
-    public Set<Appointment> getAppointmentsByUserId(Long userId, LocalDate startDate, LocalDate endDate) {
+    public Set<Appointment> getAppointmentsByUserId(Long userId, LocalDateTime startDate, LocalDateTime endDate) {
         return appointmentRepository.findAppointmentByDateRange(userId, startDate, endDate);
     }
 
     @Override
-    public Set<Appointment> getAppointmentsByUserIdAndStatus(Long userId, LocalDate startDate, LocalDate endDate, AppointmentStatus status) {
+    public Set<Appointment> getAppointmentsByUserIdAndStatus(Long userId, LocalDateTime startDate, LocalDateTime endDate, AppointmentStatus status) {
+        if (status == null) {
+            return appointmentRepository.findAppointmentByDateRange(userId, startDate, endDate);
+        }
         return appointmentRepository.findAppointmentByDateRangeAndStatus(userId, startDate, endDate, status);
     }
 

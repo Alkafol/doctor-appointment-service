@@ -46,4 +46,10 @@ public class UserController {
         User user = userService.findByEmail(userLoginDto.getEmail());
         return convertToUserDataDto(user);
     }
+
+    @PostMapping("/logout")
+    public void logoutUser() {
+        Authentication authentication = authenticationManager.authenticate(null);
+        SecurityContextHolder.getContext().setAuthentication(null);
+    }
 }

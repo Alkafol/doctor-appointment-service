@@ -56,7 +56,7 @@ public class DoctorController {
     }
 
     private Doctor convertToDoctor(DoctorUpdateDto doctorUpdateDto) {
-        Doctor doctor = new Doctor();
+        Doctor doctor = doctorService.findDoctorById(doctorUpdateDto.getId());
         Position position = positionService.findById(doctorUpdateDto.getPositionId());
 
         doctor.setId(doctorUpdateDto.getId());
