@@ -8,9 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import static com.svi.group5.enums.AppointmentStatus.AVAILABLE;
 
@@ -68,6 +73,42 @@ public class TimetableServiceImpl {
         }
 
         return result;
+    }
+
+
+    public void createEmptySlotsForADay(Doctor doctor, LocalDate day) {
+        Stream.iterate(day.atStartOfDay().plusHours(workDayStart), (LocalDateTime prevSlotStart) -> prevSlotStart.plusMinutes(appointmentDurationInMinutes))
+            .takeWhile((LocalDateTime slotStart) -> slotStart.getHour() < workDayEnd)
+            .map((LocalDateTime slotStart) -> makeEmptySlot(doctor, slotStart))
+            .forEach(this::createIfNotExists);
+    }
+
+    public Appointment makeEmptySlot(Doctor doctor, LocalDateTime startTime) {
+        Appointment appointment = new Appointment();
+        appointment.setDoctor(doctor);
+        appointment.setStartTime(startTime);
+        appointment.setEndTime(startTime.plusMinutes(appointmentDurationInMinutes));
+        appointment.setStatus(AVAILABLE);
+        return appointment;
+    }
+
+    public void createIfNotExists(Appointment appointment) {
+        Appointment existing = appointmentRepository.findAppointmentByDoctorAndStartTime(appointment.getDoctor(), appointment.getStartTime());
+        if (existing != null) {
+            return;
+        }
+        appointmentRepository.save(appointment);
+    }
+
+    public void ensureThisWeekSchedule() {
+        LocalDate monday = LocalDate.now().with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
+        List<LocalDate> thisWeek = IntStream.range(0, 7).mapToObj(offset -> monday.plusDays(offset)).toList();
+        List<Doctor> doctors = doctorRepository.findAll();
+        for (Doctor doctor : doctors) {
+            for (LocalDate day : thisWeek) {
+                createEmptySlotsForADay(doctor, day);
+            }
+        }
     }
 
 }
