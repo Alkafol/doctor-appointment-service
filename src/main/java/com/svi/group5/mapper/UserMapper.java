@@ -25,6 +25,7 @@ public class UserMapper {
         user.setMiddleName(userCreateDto.getMiddleName());
         user.setDateOfBirth(userCreateDto.getDateOfBirth());
         user.setPassword(userCreateDto.getPassword());
+        user.setRole(userCreateDto.getRole());
 
         return user;
     }
@@ -37,7 +38,8 @@ public class UserMapper {
                 user.getLastName(),
                 user.getMiddleName(),
                 user.getEmail(),
-                user.getDateOfBirth()
+                user.getDateOfBirth(),
+                user.getRole()
         );
     }
 }

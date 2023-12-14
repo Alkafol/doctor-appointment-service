@@ -1,6 +1,7 @@
 package com.svi.group5.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.svi.group5.enums.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -16,4 +17,5 @@ public class UserDataDto {
     private String email;
     @JsonFormat(pattern = "ddMMyyyy")
     private LocalDate dateOfBirth;
+    private Role role;
 }
