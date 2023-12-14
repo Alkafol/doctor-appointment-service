@@ -33,8 +33,8 @@ public class DoctorController {
         return convertToDoctorDto(doctor);
     }
 
-    @PostMapping("/filter")
-    public List<DoctorDataDto> findAllDoctors(@RequestBody DoctorFilterDto filterDto) {
+    @GetMapping()
+    public List<DoctorDataDto> findAllDoctors(@RequestBody(required = false) DoctorFilterDto filterDto) {
         Map<String, Object> filter = convertFiterToMap(filterDto);
         List<Doctor> doctors = doctorService.findAllDoctors(filter);
         return doctors.stream().map(this::convertToDoctorDto).toList();
@@ -99,6 +99,9 @@ public class DoctorController {
 
     private Map<String, Object> convertFiterToMap(DoctorFilterDto doctorFilterDto) {
         HashMap<String, Object> filterMap = new HashMap<>();
+        if (doctorFilterDto == null) {
+            return filterMap;
+        }
         if (doctorFilterDto.getExperienceLowerBound() != null) {
             filterMap.put("experienceLowerBound", doctorFilterDto.getExperienceLowerBound());
         }
