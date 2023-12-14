@@ -61,7 +61,7 @@ public class AppointmentController {
     ) {
         User user = (User) authentication.getPrincipal();
         LocalDateTime start = startDate.atTime(LocalTime.MIDNIGHT);
-        LocalDateTime end = endDate.atTime(LocalTime.MIDNIGHT);
+        LocalDateTime end = endDate.atTime(LocalTime.MIDNIGHT.minusMinutes(1L));
         List<Appointment> appointments = appointmentService.getAppointmentsByUserId(userId, start, end);
         return appointments.stream()
                 .map(appointment -> convertToAppointmentDto(appointment, user))
