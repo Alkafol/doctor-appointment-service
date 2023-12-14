@@ -11,10 +11,16 @@ import java.util.Set;
 @Entity
 @Table(name = "doctor")
 public class Doctor extends User {
-    @OneToMany(mappedBy="doctor")
+    @OneToMany(mappedBy = "doctor")
     private Set<Appointment> appointments;
 
+    @Column(name = "experience")
+    private Integer experience;
+
+    @Column(name = "description")
+    private String description;
+
     @ManyToOne
-    @JoinColumn(name="position_id")
+    @JoinColumn(name = "position_id")
     private Position position;
 }

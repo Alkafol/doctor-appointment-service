@@ -10,9 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Objects;
-import java.util.Set;
 
 @Service
 public class AppointmentServiceImpl implements AppointmentService {
@@ -29,12 +29,12 @@ public class AppointmentServiceImpl implements AppointmentService {
     }
 
     @Override
-    public Set<Appointment> getAppointmentsByUserId(Long userId, LocalDateTime startDate, LocalDateTime endDate) {
+    public List<Appointment> getAppointmentsByUserId(Long userId, LocalDateTime startDate, LocalDateTime endDate) {
         return appointmentRepository.findAppointmentByDateRange(userId, startDate, endDate);
     }
 
     @Override
-    public Set<Appointment> getAppointmentsByUserIdAndStatus(Long userId, LocalDateTime startDate, LocalDateTime endDate, AppointmentStatus status) {
+    public List<Appointment> getAppointmentsByUserIdAndStatus(Long userId, LocalDateTime startDate, LocalDateTime endDate, AppointmentStatus status) {
         if (status == null) {
             return appointmentRepository.findAppointmentByDateRange(userId, startDate, endDate);
         }
@@ -44,7 +44,7 @@ public class AppointmentServiceImpl implements AppointmentService {
     @Override
     public Appointment updateAppointment(Appointment appointment, User user) {
         if (user.getRole() == Role.CLIENT) {
-            if (Objects.equals(user.getId(), appointment.getClient().getId())) {
+            if (!Objects.equals(user.getId(), appointment.getClient().getId())) {
                 throw new IllegalStateException();
             }
 
@@ -53,11 +53,11 @@ public class AppointmentServiceImpl implements AppointmentService {
             }
         }
         if (user.getRole() == Role.DOCTOR) {
-            if (Objects.equals(user.getId(), appointment.getDoctor().getId())) {
+            if (!Objects.equals(user.getId(), appointment.getDoctor().getId())) {
                 throw new IllegalStateException();
             }
 
-            if (appointment.getStatus() == AppointmentStatus.BOOKED || appointment.getClient().getId() != null) {
+            if (appointment.getStatus() == AppointmentStatus.BOOKED) {
                 throw new IllegalStateException();
             }
         }

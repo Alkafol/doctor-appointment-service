@@ -17,8 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.List;
 
 import static com.svi.group5.mapper.UserMapper.convertToUserDataDto;
 
@@ -52,7 +51,7 @@ public class AppointmentController {
     }
 
     @GetMapping("/user/{userId}")
-    public Set<AppointmentDataDto> getAppointmentsByUserId(
+    public List<AppointmentDataDto> getAppointmentsByUserId(
             @PathVariable Long userId,
             @DateTimeFormat(pattern = "ddMMyyyy")
             @RequestParam LocalDate startDate,
@@ -63,14 +62,14 @@ public class AppointmentController {
         User user = (User) authentication.getPrincipal();
         LocalDateTime start = startDate.atTime(LocalTime.MIDNIGHT);
         LocalDateTime end = endDate.atTime(LocalTime.MIDNIGHT);
-        Set<Appointment> appointments = appointmentService.getAppointmentsByUserId(userId, start, end);
+        List<Appointment> appointments = appointmentService.getAppointmentsByUserId(userId, start, end);
         return appointments.stream()
                 .map(appointment -> convertToAppointmentDto(appointment, user))
-                .collect(Collectors.toSet());
+                .toList();
     }
 
     @GetMapping("/user/{userId}/status")
-    public Set<AppointmentDataDto> getAppointmentsByUserIdAndStatus(
+    public List<AppointmentDataDto> getAppointmentsByUserIdAndStatus(
             @PathVariable Long userId,
             @DateTimeFormat(pattern = "ddMMyyyy")
             @RequestParam LocalDate startDate,
@@ -82,10 +81,10 @@ public class AppointmentController {
         User user = (User) authentication.getPrincipal();
         LocalDateTime start = startDate.atTime(LocalTime.MIDNIGHT);
         LocalDateTime end = endDate.atTime(LocalTime.MIDNIGHT);
-        Set<Appointment> appointments = appointmentService.getAppointmentsByUserIdAndStatus(userId, start, end, status);
+        List<Appointment> appointments = appointmentService.getAppointmentsByUserIdAndStatus(userId, start, end, status);
         return appointments.stream()
                 .map(appointment -> convertToAppointmentDto(appointment, user))
-                .collect(Collectors.toSet());
+                .toList();
     }
 
     @PutMapping
