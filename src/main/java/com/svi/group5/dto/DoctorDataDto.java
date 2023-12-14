@@ -11,4 +11,8 @@ public class DoctorDataDto {
     private UserDataDto userInfo;
     @JsonUnwrapped
     private PositionDataDto position;
+    @JsonUnwrapped
+    private String description;
+    @JsonUnwrapped
+    private Integer experience;
 }

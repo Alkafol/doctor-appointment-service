@@ -7,6 +7,7 @@ import com.svi.group5.service.DoctorService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @Service
@@ -23,8 +24,8 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
     @Override
-    public List<Doctor> findAllDoctors() {
-        return doctorRepository.findAll();
+    public List<Doctor> findAllDoctors(Map<String, Object> filter) {
+        return doctorRepository.find(filter);
     }
 
     @Override

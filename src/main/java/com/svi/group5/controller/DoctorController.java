@@ -1,9 +1,6 @@
 package com.svi.group5.controller;
 
-import com.svi.group5.dto.DoctorDataDto;
-import com.svi.group5.dto.DoctorUpdateDto;
-import com.svi.group5.dto.PositionCreateDto;
-import com.svi.group5.dto.PositionDataDto;
+import com.svi.group5.dto.*;
 import com.svi.group5.entity.Doctor;
 import com.svi.group5.entity.Position;
 import com.svi.group5.entity.User;
@@ -12,7 +9,9 @@ import com.svi.group5.service.PositionService;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.svi.group5.mapper.UserMapper.convertToUserDataDto;
 
@@ -34,9 +33,10 @@ public class DoctorController {
         return convertToDoctorDto(doctor);
     }
 
-    @GetMapping
-    public List<DoctorDataDto> findAllDoctors() {
-        List<Doctor> doctors = doctorService.findAllDoctors();
+    @PostMapping("/filter")
+    public List<DoctorDataDto> findAllDoctors(@RequestBody DoctorFilterDto filterDto) {
+        Map<String, Object> filter = convertFiterToMap(filterDto);
+        List<Doctor> doctors = doctorService.findAllDoctors(filter);
         return doctors.stream().map(this::convertToDoctorDto).toList();
     }
 
@@ -68,6 +68,8 @@ public class DoctorController {
             Position position = positionService.findById(doctorUpdateDto.getPositionId());
             doctor.setPosition(position);
         }
+        doctor.setDescription(doctor.getDescription());
+        doctor.setExperience(doctor.getExperience());
 
         return doctor;
     }
@@ -75,7 +77,9 @@ public class DoctorController {
     private DoctorDataDto convertToDoctorDto(Doctor doctor) {
         return new DoctorDataDto(
                 convertToUserDataDto(doctor),
-                convertToPositionDataDto(doctor.getPosition())
+                convertToPositionDataDto(doctor.getPosition()),
+                doctor.getDescription(),
+                doctor.getExperience()
         );
     }
 
@@ -91,5 +95,17 @@ public class DoctorController {
         Position position = new Position();
         position.setName(positionCreateDto.getName());
         return position;
+    }
+
+    private Map<String, Object> convertFiterToMap(DoctorFilterDto doctorFilterDto) {
+        HashMap<String, Object> filterMap = new HashMap<>();
+        if (doctorFilterDto.getExperienceLowerBound() != null) {
+            filterMap.put("experienceLowerBound", doctorFilterDto.getExperienceLowerBound());
+        }
+        if (doctorFilterDto.getPositionId() != null) {
+            filterMap.put("positionId", doctorFilterDto.getPositionId());
+        }
+
+        return filterMap;
     }
 }

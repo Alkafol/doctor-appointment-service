@@ -19,4 +19,6 @@ public class DoctorUpdateDto {
     @JsonFormat(pattern = "ddMMyyyy")
     private LocalDate dateOfBirth;
     private Long positionId;
+    private String description;
+    private Integer experience;
 }
