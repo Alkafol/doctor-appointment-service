@@ -37,7 +37,7 @@ public class ClientController {
     }
 
     @PutMapping
-    public ClientDataDto updateClient(ClientUpdateDto clientUpdateDto, Authentication authentication) {
+    public ClientDataDto updateClient(@RequestBody ClientUpdateDto clientUpdateDto, Authentication authentication) {
         User user = (User) authentication.getPrincipal();
         Client client = convertToClient(clientUpdateDto);
         Client updatedClient = clientService.updateClient(client, user);
@@ -54,8 +54,8 @@ public class ClientController {
         client.setFirstName(clientUpdateDto.getFirstName());
         client.setLastName(clientUpdateDto.getLastName());
         client.setMiddleName(clientUpdateDto.getMiddleName());
-        client.setEmail(client.getEmail());
-        client.setDateOfBirth(client.getDateOfBirth());
+        client.setEmail(clientUpdateDto.getEmail());
+        client.setDateOfBirth(clientUpdateDto.getDateOfBirth());
 
         return client;
     }

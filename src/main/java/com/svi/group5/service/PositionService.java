@@ -8,5 +8,7 @@ public interface PositionService {
     Position findById(Long id);
     List<Position> findAll();
     Position create(Position position);
+
+    Position findByName(String name);
     void delete(Long id);
 }

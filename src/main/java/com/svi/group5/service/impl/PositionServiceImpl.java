@@ -33,6 +33,11 @@ public class PositionServiceImpl implements PositionService {
     }
 
     @Override
+    public Position findByName(String name) {
+        return positionRepository.findByName(name);
+    }
+
+    @Override
     public void delete(Long id) {
         Position position = findById(id);
         if (!position.getDoctors().isEmpty()) {

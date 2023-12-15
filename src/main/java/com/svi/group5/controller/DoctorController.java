@@ -64,8 +64,8 @@ public class DoctorController {
         doctor.setMiddleName(doctorUpdateDto.getMiddleName());
         doctor.setDateOfBirth(doctorUpdateDto.getDateOfBirth());
         doctor.setEmail(doctorUpdateDto.getEmail());
-        if (doctorUpdateDto.getPositionId() != null) {
-            Position position = positionService.findById(doctorUpdateDto.getPositionId());
+        if (doctorUpdateDto.getPositionName() != null) {
+            Position position = positionService.findByName(doctorUpdateDto.getPositionName());
             doctor.setPosition(position);
         }
         doctor.setDescription(doctorUpdateDto.getDescription());

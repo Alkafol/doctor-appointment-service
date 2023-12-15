@@ -21,7 +21,7 @@ public class DoctorUpdateDto {
     private String email;
     @JsonFormat(pattern = "ddMMyyyy")
     private LocalDate dateOfBirth;
-    private Long positionId;
+    private String positionName;
     private String description;
     private Integer experience;
 }
