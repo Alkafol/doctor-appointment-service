@@ -117,7 +117,10 @@ public class AppointmentController {
 
     private Appointment convertToAppointment(AppointmentUpdateDto appointmentUpdateDto) {
         Appointment appointment = appointmentService.getAppointmentById(appointmentUpdateDto.getId());
-        Client client = clientService.findClientById(appointmentUpdateDto.getClientId());
+        Client client = null;
+        if (appointmentUpdateDto.getClientId() != null) {
+            client = clientService.findClientById(appointmentUpdateDto.getClientId());
+        }
 
         appointment.setId(appointmentUpdateDto.getId());
         appointment.setClient(client);

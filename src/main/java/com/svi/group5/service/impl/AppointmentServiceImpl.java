@@ -43,8 +43,9 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     @Override
     public Appointment updateAppointment(Appointment appointment, User user) {
+        // TODO: fix this IF for possible null clientId
         if (user.getRole() == Role.CLIENT) {
-            if (!Objects.equals(user.getId(), appointment.getClient().getId())) {
+            if (appointment.getClient() != null && !Objects.equals(user.getId(), appointment.getClient().getId())) {
                 throw new IllegalStateException();
             }
 
@@ -52,7 +53,7 @@ public class AppointmentServiceImpl implements AppointmentService {
                 throw new IllegalStateException();
             }
         }
-        if (user.getRole() == Role.DOCTOR) {
+        if (appointment.getDoctor() != null && user.getRole() == Role.DOCTOR) {
             if (!Objects.equals(user.getId(), appointment.getDoctor().getId())) {
                 throw new IllegalStateException();
             }
@@ -61,7 +62,6 @@ public class AppointmentServiceImpl implements AppointmentService {
                 throw new IllegalStateException();
             }
         }
-
         return appointmentRepository.save(appointment);
     }
 
