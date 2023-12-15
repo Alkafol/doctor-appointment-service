@@ -93,7 +93,7 @@ public class TimetableServiceImpl {
     }
 
     public void createIfNotExists(Appointment appointment) {
-        Appointment existing = appointmentRepository.findAppointmentByDoctorAndStartTime(appointment.getDoctor(), appointment.getStartTime());
+        Appointment existing = appointmentRepository.findAppointmentByDoctorAndStartTimeOrderByStartTime(appointment.getDoctor(), appointment.getStartTime());
         if (existing != null) {
             return;
         }
