@@ -62,6 +62,9 @@ public class AppointmentServiceImpl implements AppointmentService {
                 throw new IllegalStateException();
             }
         }*/
+        if (appointment.getStartTime().isBefore(LocalDateTime.now())) {
+            throw new IllegalStateException();
+        }
         return appointmentRepository.save(appointment);
     }
 
