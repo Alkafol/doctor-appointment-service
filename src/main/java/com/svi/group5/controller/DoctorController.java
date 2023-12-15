@@ -68,8 +68,8 @@ public class DoctorController {
             Position position = positionService.findById(doctorUpdateDto.getPositionId());
             doctor.setPosition(position);
         }
-        doctor.setDescription(doctor.getDescription());
-        doctor.setExperience(doctor.getExperience());
+        doctor.setDescription(doctorUpdateDto.getDescription());
+        doctor.setExperience(doctorUpdateDto.getExperience());
 
         return doctor;
     }
